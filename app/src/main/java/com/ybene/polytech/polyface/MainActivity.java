@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -60,12 +61,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        Log.e("XXXSIZEXXX", "Width = " + width + " Height = " + height);
+        ViewGroup.LayoutParams params = smileyImageView.getLayoutParams();
+        params.height = 512;
+        params.width = 32;
+        smileyImageView.setLayoutParams(params);
     }
 
     @Override
