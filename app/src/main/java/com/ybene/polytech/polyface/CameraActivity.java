@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -39,7 +40,9 @@ public class CameraActivity extends AppCompatActivity {
 
     private CameraView cameraView;
     private GraphicOverlay graphicOverlay;
+    private GraphicOverlay graphicOverlayAllPoints;
     private ImageButton detectImageButton, swapImageButton;
+    private Button allPointsButton;
     private ArrayList<FirebaseVisionPoint> leftEyebrowExtremePoints;
     private ArrayList<FirebaseVisionPoint> rightEyebrowExtremePoints;
     private ArrayList<FirebaseVisionPoint> mouthWidthExtremePoints;
@@ -67,8 +70,10 @@ public class CameraActivity extends AppCompatActivity {
         // Init
         cameraView = findViewById(R.id.activity_camera_camera_view);
         graphicOverlay = findViewById(R.id.activity_camera_graphic_overlay);
+        graphicOverlayAllPoints  = findViewById(R.id.activity_camera_graphic_all);
         detectImageButton = findViewById(R.id.activity_camera_detect_button);
         swapImageButton = findViewById(R.id.activity_camera_camera_swap);
+        allPointsButton = findViewById(R.id.activity_camera_points_display);
 
         leftEyebrowExtremePoints = new ArrayList<>();
         rightEyebrowExtremePoints = new ArrayList<>();
@@ -127,6 +132,19 @@ public class CameraActivity extends AppCompatActivity {
                 }
             }
         });
+
+        allPointsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(graphicOverlayAllPoints.getVisibility() == View.INVISIBLE) {
+                    graphicOverlayAllPoints.setVisibility(View.VISIBLE);
+                    graphicOverlay.setVisibility(View.INVISIBLE);
+                } else {
+                    graphicOverlayAllPoints.setVisibility(View.INVISIBLE);
+                    graphicOverlay.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void runFaceDetector(Bitmap bitmap) {
@@ -168,112 +186,99 @@ public class CameraActivity extends AppCompatActivity {
             Rect bounds = face.getBoundingBox();
             RectOverlay rect = new RectOverlay(graphicOverlay, bounds);
             graphicOverlay.add(rect);
+            graphicOverlayAllPoints.add(rect);
 
             // Get all contours
-            FirebaseVisionFaceContour faceContour = face.getContour(FirebaseVisionFaceContour.FACE);
+            FaceContour faceContour = new FaceContour(face);
 
-            FirebaseVisionFaceContour rightEyeContour = face.getContour(FirebaseVisionFaceContour.RIGHT_EYE);
-            FirebaseVisionFaceContour leftEyeContour = face.getContour(FirebaseVisionFaceContour.LEFT_EYE);
-
-            FirebaseVisionFaceContour rightEyebrowBottomContour = face.getContour(FirebaseVisionFaceContour.RIGHT_EYEBROW_BOTTOM);
-            FirebaseVisionFaceContour rightEyebrowTopContour = face.getContour(FirebaseVisionFaceContour.RIGHT_EYEBROW_TOP);
-            FirebaseVisionFaceContour leftEyebrowBottomContour = face.getContour(FirebaseVisionFaceContour.LEFT_EYEBROW_BOTTOM);
-            FirebaseVisionFaceContour leftEyebrowTopContour = face.getContour(FirebaseVisionFaceContour.LEFT_EYEBROW_TOP);
-
-            FirebaseVisionFaceContour lowerLipBottomContour = face.getContour(FirebaseVisionFaceContour.LOWER_LIP_BOTTOM);
-            FirebaseVisionFaceContour lowerLipTopContour = face.getContour(FirebaseVisionFaceContour.LOWER_LIP_TOP);
-            FirebaseVisionFaceContour upperLipBottomContour = face.getContour(FirebaseVisionFaceContour.UPPER_LIP_BOTTOM);
-            FirebaseVisionFaceContour upperLipTopContour = face.getContour(FirebaseVisionFaceContour.UPPER_LIP_TOP);
-
-            FirebaseVisionFaceContour noseBottomContour = face.getContour(FirebaseVisionFaceContour.NOSE_BOTTOM);
-            FirebaseVisionFaceContour noseBridgeContour = face.getContour(FirebaseVisionFaceContour.NOSE_BRIDGE);
-
-            /*// Drawing points for the face
-            for (FirebaseVisionPoint point : faceContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.BLUE, 2.0f);
-                graphicOverlay.add(dot);
+            // Drawing points for the face
+            for (FirebaseVisionPoint point : faceContour.getFaceContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.BLUE, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
             // Drawing points for eyes
-            for (FirebaseVisionPoint point : rightEyeContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.RED, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getRightEyeContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.RED, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : leftEyeContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.RED, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getLeftEyeContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.RED, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
             // Draw points for eyebrows
-            for (FirebaseVisionPoint point : rightEyebrowBottomContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.GREEN, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getRightEyebrowBottomContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.GREEN, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : rightEyebrowTopContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.GREEN, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getRightEyebrowTopContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.GREEN, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : leftEyebrowBottomContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.GREEN, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getLeftEyebrowBottomContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.GREEN, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : leftEyebrowTopContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.GREEN, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getLeftEyebrowTopContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.GREEN, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
             // Draw points for lips
-            for (FirebaseVisionPoint point : lowerLipBottomContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getLowerLipBottomContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : lowerLipTopContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getLowerLipTopContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : upperLipBottomContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getUpperLipBottomContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : upperLipTopContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getUpperLipTopContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.MAGENTA, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
             // Draw points for nose
-            for (FirebaseVisionPoint point : noseBottomContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.LTGRAY, 2.0f);
-                graphicOverlay.add(dot);
+            for (FirebaseVisionPoint point : faceContour.getNoseBottomContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.LTGRAY, 2.0f);
+                graphicOverlayAllPoints.add(dot);
             }
 
-            for (FirebaseVisionPoint point : noseBridgeContour.getPoints()) {
-                DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.LTGRAY, 2.0f);
-                graphicOverlay.add(dot);
-            }*/
+            for (FirebaseVisionPoint point : faceContour.getNoseBridgeContour().getPoints()) {
+                DotOverlay dot = new DotOverlay(graphicOverlayAllPoints, point.getX(), point.getY(), Color.LTGRAY, 2.0f);
+                graphicOverlayAllPoints.add(dot);
+            }
 
             // Reference point
             DotOverlay referencePoint = new DotOverlay(graphicOverlay,
-                    noseBridgeContour.getPoints().get(0).getX(),
-                    (noseBridgeContour.getPoints().get(0).getY() + noseBridgeContour.getPoints().get(1).getY())/2,
+                    faceContour.getNoseBridgeContour().getPoints().get(0).getX(),
+                    (faceContour.getNoseBridgeContour().getPoints().get(0).getY()
+                            + faceContour.getNoseBridgeContour().getPoints().get(1).getY())/2,
                     Color.RED,
                     4.0f);
             graphicOverlay.add(referencePoint);
 
-            leftEyebrowExtremePoints.add(leftEyebrowTopContour.getPoints().get(0));
-            leftEyebrowExtremePoints.add(leftEyebrowTopContour.getPoints().get(4));
-            rightEyebrowExtremePoints.add(rightEyebrowTopContour.getPoints().get(0));
-            rightEyebrowExtremePoints.add(rightEyebrowTopContour.getPoints().get(4));
-            mouthWidthExtremePoints.add(upperLipTopContour.getPoints().get(0));
-            mouthWidthExtremePoints.add(upperLipTopContour.getPoints().get(10));
-            mouthHeightExtremePoints.add(upperLipTopContour.getPoints().get(5));
-            mouthHeightExtremePoints.add(lowerLipBottomContour.getPoints().get(4));
+            // Points needed for emotion detection
+            leftEyebrowExtremePoints.add(faceContour.getLeftEyebrowTopContour().getPoints().get(0));
+            leftEyebrowExtremePoints.add(faceContour.getLeftEyebrowTopContour().getPoints().get(4));
+            rightEyebrowExtremePoints.add(faceContour.getRightEyebrowTopContour().getPoints().get(0));
+            rightEyebrowExtremePoints.add(faceContour.getRightEyebrowTopContour().getPoints().get(4));
+            mouthWidthExtremePoints.add(faceContour.getUpperLipTopContour().getPoints().get(0));
+            mouthWidthExtremePoints.add(faceContour.getUpperLipTopContour().getPoints().get(10));
+            mouthHeightExtremePoints.add(faceContour.getUpperLipTopContour().getPoints().get(5));
+            mouthHeightExtremePoints.add(faceContour.getLowerLipBottomContour().getPoints().get(4));
 
             for (FirebaseVisionPoint point : leftEyebrowExtremePoints) {
                 DotOverlay dot = new DotOverlay(graphicOverlay, point.getX(), point.getY(), Color.RED, 4.0f);
@@ -295,9 +300,9 @@ public class CameraActivity extends AppCompatActivity {
                 graphicOverlay.add(dot);
             }
 
-
-
             Toast.makeText(getBaseContext(), "Done !", Toast.LENGTH_SHORT).show();
+            graphicOverlay.setVisibility(View.VISIBLE);
+            graphicOverlayAllPoints.setVisibility(View.INVISIBLE);
         }
     }
 
