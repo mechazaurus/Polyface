@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/main_activity_background" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/main_activity_polyface"/>
+
+    <ImageView
+        android:id="@+id/activiy_main_smiley_face"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="135dp"/>
+
+    <ImageButton
+        android:id="@+id/activity_main_about_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@null"
+        android:src="@drawable/main_activity_about" />
+
+    <FrameLayout
+        android:layout_width="250dp"
+        android:layout_height="135dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="175dp"
+        android:background="@drawable/about_activity_border">
+
+        <ImageButton
+            android:id="@+id/activity_main_picture_mode"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="top|left"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:src="@drawable/main_activity_camera"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/main_activity_picture" />
+
+        <ImageButton
+            android:id="@+id/activity_main_realtime_mode"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="top|right"
+            android:layout_marginRight="15dp"
+            android:background="@null"
+            android:src="@drawable/main_activity_portrait" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="7dp"
+            android:src="@drawable/main_activity_realtime"/>
+
+    </FrameLayout>
+
+</FrameLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/selected" android:oneshot="false">
+    <item android:drawable="@drawable/main_activity_happy" android:duration="2000"/>
+    <item android:drawable="@drawable/main_activity_sad" android:duration="2000"/>
+    <item android:drawable="@drawable/main_activity_angry" android:duration="2000"/>
+    <item android:drawable="@drawable/main_activity_scare" android:duration="2000"/>
+    <item android:drawable="@drawable/main_activity_shocked" android:duration="2000"/>
+    <item android:drawable="@drawable/main_activity_surprised" android:duration="2000"/>
+</animation-list>

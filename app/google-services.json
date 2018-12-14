@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "979746257650",
+    "firebase_url": "https://polyface-64217.firebaseio.com",
+    "project_id": "polyface-64217",
+    "storage_bucket": "polyface-64217.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979746257650:android:4556b5e282cd88b9",
+        "android_client_info": {
+          "package_name": "com.ybene.polytech.polyface"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979746257650-n0eimb5pju4aqdj5t653qhvc4fuco0km.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9sMFVVATZ_5uipzl3Vrkxl11n2lRW69c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

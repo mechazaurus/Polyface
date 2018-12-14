@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.otaliastudios.cameraview.CameraView
+        android:id="@+id/activity_realtime_camera_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cameraCropOutput="true"></com.otaliastudios.cameraview.CameraView>
+
+    <com.ybene.polytech.polyface.graphics.GraphicOverlay
+        android:id="@+id/activity_realtime_graphic_overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/activity_realtime_camera_swap"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/camera_activity_swap"
+        android:background="@null"/>
+
+</FrameLayout>
