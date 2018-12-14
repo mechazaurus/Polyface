@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
+import com.ybene.polytech.polyface.graphics.DotDotOverlay;
 import com.ybene.polytech.polyface.graphics.DotOverlay;
 import com.ybene.polytech.polyface.graphics.GraphicOverlay;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -119,22 +120,28 @@ public class RealtimeActivity extends AppCompatActivity {
 
                 Bitmap bitmapdebug = firebaseVisionImage.getBitmapForDebugging();
                 detector.detectInImage(firebaseVisionImage)
-                        .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionFace>>() {
+                        .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionFace>>()
+                        {
                             @Override
-                            public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
-                                if (firebaseVisionFaces.size() != 0) {
-                                    FirebaseVisionFaceContour contour = firebaseVisionFaces.get(0).getContour(FirebaseVisionFaceContour.ALL_POINTS);
+                            public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces)
+                            {
+                                if(firebaseVisionFaces.size()!=0)
+                                {
+                                    //Toast.makeText(MainActivity.this, "Face detected", Toast.LENGTH_SHORT).show();
 
-                                    for (FirebaseVisionPoint points : contour.getPoints()) {
-                                        DotOverlay dot = new DotOverlay(graphicOverlay, points.getX(), points.getY(), Color.BLUE, 2.0f);
-                                        graphicOverlay.add(dot);
-                                    }
+                                    //RectOverlay rect = new RectOverlay(graphicOverlay,firebaseVisionFaces.get(0).getBoundingBox() );
+                                    FirebaseVisionFaceContour contour = firebaseVisionFaces.get(0).getContour(FirebaseVisionFaceContour.ALL_POINTS);
+                                    DotDotOverlay dot = new DotDotOverlay(graphicOverlay, contour.getPoints());
+                                    //graphicOverlay.add(rect);
+                                    graphicOverlay.add(dot);
                                 }
                             }
                         })
-                        .addOnFailureListener(new OnFailureListener() {
+                        .addOnFailureListener(new OnFailureListener()
+                        {
                             @Override
-                            public void onFailure(@NonNull Exception e) {
+                            public void onFailure(@NonNull Exception e)
+                            {
                                 Toast.makeText(RealtimeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });

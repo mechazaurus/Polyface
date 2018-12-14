@@ -29,7 +29,8 @@ public class DotOverlay extends GraphicOverlay.Graphic {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas)
+    {
         canvas.drawCircle(x, y, 4, dotPaint);
     }
 }
