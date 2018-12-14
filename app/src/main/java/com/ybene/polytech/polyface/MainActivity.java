@@ -1,9 +1,12 @@
 package com.ybene.polytech.polyface;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -56,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(realtimeActivity);
             }
         });
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        Log.e("XXXSIZEXXX", "Width = " + width + " Height = " + height);
     }
 
     @Override
