@@ -12,7 +12,7 @@ public class FaceContour {
     private FirebaseVisionFaceContour leftEyebrowBottomContour, leftEyebrowTopContour;
     private FirebaseVisionFaceContour lowerLipBottomContour, lowerLipTopContour;
     private FirebaseVisionFaceContour upperLipBottomContour, upperLipTopContour;
-    private FirebaseVisionFaceContour noseBottomContourn, noseBridgeContour;
+    private FirebaseVisionFaceContour noseBottomContour, noseBridgeContour;
 
     public FaceContour (FirebaseVisionFace face) {
         this.face = face;
@@ -38,7 +38,7 @@ public class FaceContour {
 
         // Nose
         noseBridgeContour = face.getContour(FirebaseVisionFaceContour.NOSE_BRIDGE);
-        noseBottomContourn = face.getContour(FirebaseVisionFaceContour.NOSE_BOTTOM);
+        noseBottomContour = face.getContour(FirebaseVisionFaceContour.NOSE_BOTTOM);
     }
 
     public FirebaseVisionFace getFace() {
@@ -137,12 +137,12 @@ public class FaceContour {
         this.upperLipTopContour = upperLipTopContour;
     }
 
-    public FirebaseVisionFaceContour getNoseBottomContourn() {
-        return noseBottomContourn;
+    public FirebaseVisionFaceContour getNoseBottomContour() {
+        return noseBottomContour;
     }
 
-    public void setNoseBottomContourn(FirebaseVisionFaceContour noseBottomContourn) {
-        this.noseBottomContourn = noseBottomContourn;
+    public void setNoseBottomContour(FirebaseVisionFaceContour noseBottomContour) {
+        this.noseBottomContour = noseBottomContour;
     }
 
     public FirebaseVisionFaceContour getNoseBridgeContour() {
