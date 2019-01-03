@@ -8,7 +8,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
 
 import java.util.List;
 
-public class DotDotOverlay extends GraphicOverlay.Graphic
+public class DotDotOverlayRef extends GraphicOverlay.Graphic
 {
 
     private Paint dotPaint;
@@ -16,13 +16,13 @@ public class DotDotOverlay extends GraphicOverlay.Graphic
     private GraphicOverlay graphicOverlay;
     private List<FirebaseVisionPoint> dotsArray;
 
-    public DotDotOverlay(GraphicOverlay graphicOverlay, List<FirebaseVisionPoint> dots)
+    public DotDotOverlayRef(GraphicOverlay graphicOverlay, List<FirebaseVisionPoint> dots)
     {
         super(graphicOverlay);
         dotsArray = dots;
         dotPaint = new Paint();
         dotPaint.setStyle(Paint.Style.FILL);
-        dotPaint.setColor(Color.YELLOW);
+        dotPaint.setColor(Color.RED);
         postInvalidate();
         this.graphicOverlay = graphicOverlay;
     }

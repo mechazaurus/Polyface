@@ -8,24 +8,50 @@
 
     <com.otaliastudios.cameraview.CameraView
         android:id="@+id/activity_realtime_camera_view"
+        android:layout_gravity="top"
         android:layout_width="1080px"
-        android:layout_height="1440px"
-        app:cameraCropOutput="true"></com.otaliastudios.cameraview.CameraView>
+        android:layout_height="1440px">
+    </com.otaliastudios.cameraview.CameraView>
 
     <com.ybene.polytech.polyface.graphics.GraphicOverlay
         android:id="@+id/activity_realtime_graphic_overlay"
         android:layout_width="1080px"
-        android:layout_height="1440px"/>
+        android:layout_height="1440px"
+        android:layout_gravity="top" />
 
     <ImageButton
         android:id="@+id/activity_realtime_camera_swap"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="25dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/camera_activity_swap"
-        android:background="@null"/>
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="17dp"
+        android:background="@null"
+        app:srcCompat="@drawable/camera_activity_swap" />
+
+    <ImageButton
+        android:id="@+id/activity_realtime_reference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="17dp"
+        android:background="@null"
+        app:srcCompat="@drawable/camera_activity_reference" />
+
+    <TextView
+        android:id="@+id/activity_realtime_emotionTextView"
+        android:layout_width="300dp"
+        android:layout_height="88dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/activity_realtime_counter"
+        android:layout_width="60dp"
+        android:layout_height="88dp"
+        android:layout_gravity="bottom|right"
+        android:gravity="center"
+        android:text="" />
 
 </FrameLayout>

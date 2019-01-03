@@ -60,11 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(realtimeActivity);
             }
         });
-
-        ViewGroup.LayoutParams params = smileyImageView.getLayoutParams();
-        params.height = 512;
-        params.width = 32;
-        smileyImageView.setLayoutParams(params);
     }
 
     @Override

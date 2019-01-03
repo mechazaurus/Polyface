@@ -10,7 +10,7 @@ public class FaceContour {
     private FirebaseVisionFaceContour rightEyeContour, leftEyeContour;
     private FirebaseVisionFaceContour rightEyebrowBottomContour, rightEyebrowTopContour;
     private FirebaseVisionFaceContour leftEyebrowBottomContour, leftEyebrowTopContour;
-    private  FirebaseVisionFaceContour lowerLipBottomContour, lowerLipTopContour;
+    private FirebaseVisionFaceContour lowerLipBottomContour, lowerLipTopContour;
     private FirebaseVisionFaceContour upperLipBottomContour, upperLipTopContour;
     private FirebaseVisionFaceContour noseBottomContourn, noseBridgeContour;
 
